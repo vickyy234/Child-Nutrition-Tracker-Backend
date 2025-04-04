@@ -12,7 +12,7 @@ app.listen(process.env.PORT || 5000, () => {
     console.log("Server started")
 })
 
-mongoose.connect(process.env.MONGO_URl)
+mongoose.connect(process.env.MONGO_URL)
     .then(() => {
         console.log('DB connected!')
     })
