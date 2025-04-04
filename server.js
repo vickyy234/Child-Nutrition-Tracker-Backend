@@ -32,8 +32,8 @@ const userModel = mongoose.model("userdata" , userSchema)
 app.post('/', async (req, res) => {
     try {
         const { name, number, password } = req.body;
-        const res = new userModel({ name, number, password })
-        await res.save();
+        const newData = new userModel({ name, number, password })
+        await newData.save();
         res.status(201).json({name , number , password})
     }
     catch (err) {
