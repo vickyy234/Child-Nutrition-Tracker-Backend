@@ -34,7 +34,7 @@ app.post('/', async (req, res) => {
         const { name, number, password } = req.body;
         const res = new userModel({ name, number, password })
         await res.save();
-        res.status(201).json({Message : 'Account Created' , name , number , password})
+        res.status(201).json({name , number , password})
     }
     catch (err) {
         res.status(500).json({Message : 'Account not created'})
