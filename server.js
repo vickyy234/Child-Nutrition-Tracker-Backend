@@ -27,16 +27,16 @@ const userSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now }
 })
 
-const userModel = mongoose.model("userdata" , userSchema)  
+const userModel = mongoose.model("userdata", userSchema)
 
 app.post('/', async (req, res) => {
     try {
         const { name, number, password } = req.body;
         const newData = new userModel({ name, number, password })
         await newData.save();
-        res.status(201).json({name , number , password})
+        res.status(201).json({ Message: 'Account created successfully', name, number, password })
     }
     catch (err) {
-        res.status(500).json({Message : 'Account not created'})
+        res.status(500).json({ Message: 'Account not created' })
     }
 })
