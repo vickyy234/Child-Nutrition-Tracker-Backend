@@ -1,17 +1,21 @@
 const express = require('express')
-const mongoose = require('mongoose')
 const app = express()
+const mongoose = require('mongoose')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 
+//Middleware
 app.use(cors())
 app.use(bodyParser.json())
+app.use(express.json())
 require('dotenv').config()
 
-app.listen(process.env.PORT || 5000, () => {
+//Port assign
+app.listen(5000, () => {
     console.log("Server started")
 })
 
+//MongoDB connection string
 mongoose.connect(process.env.MONGO_URL)
     .then(() => {
         console.log('DB connected!')
@@ -20,23 +24,5 @@ mongoose.connect(process.env.MONGO_URL)
         console.log('DB not connected ', err)
     })
 
-const userSchema = new mongoose.Schema({
-    name: String,
-    number: Number,
-    password: String,
-    createdAt: { type: Date, default: Date.now }
-})
-
-const userModel = mongoose.model("userdata", userSchema)
-
-app.post('/', async (req, res) => {
-    try {
-        const { name, number, password } = req.body;
-        const newData = new userModel({ name, number, password })
-        await newData.save();
-        res.status(201).json({ Message: 'Account created successfully', name, number, password })
-    }
-    catch (err) {
-        res.status(500).json({ Message: 'Account not created' })
-    }
-})
+const registerRoute = require('./router/registerRouter')
+app.use('/', registerRoute)
